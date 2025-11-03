@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tes Tingkat Bahasa Inggris A1-C2</title>
+    <style>
+        /* Gaya CSS */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .quiz-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            width: 100%;
+        }
+        h1 {
+            color: #3498db;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .question-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .question-text {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .options label {
+            display: block;
+            margin: 8px 0;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .options label:hover {
+            background-color: #bdc3c7;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #submit-btn:hover {
+            background-color: #27ae60;
+        }
+        .result-box {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            background-color: #e8f8f5;
+            border: 2px solid #1abc9c;
+        }
+        .result-box h2 {
+            color: #1abc9c;
+        }
+        .level-description {
+            margin-top: 10px;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>Tes Tingkat Bahasa Inggris (25 Soal A1-C2)</h1>
+    <form id="english-test-form">
+        </form>
+    <button id="submit-btn" onclick="submitTest()">Selesai & Lihat Hasil</button>
+    <div id="results" class="result-box" style="display: none;">
+        </div>
+</div>
+
+<script>
+    // Data Soal (Berdasarkan revisi terakhir)
+    const questions = [
+        // A1/A2
+        { id: 1, level: 'A1', question: "My name is David. I ___ a student.", options: ["are", "is", "am", "be"], answer: "am" },
+        { id: 2, level: 'A1', question: "This is my sister. ___ is a nurse.", options: ["He", "His", "She", "Her"], answer: "She" },
+        { id: 3, level: 'A1', question: "The book is ___ the bag.", options: ["on", "under", "in", "at"], answer: "in" },
+        { id: 4, level: 'A1', question: "I have one ___ and two ___ (apple).", options: ["apple, apples", "apples, apple", "apple, apple", "apples, apples"], answer: "apple, apples" },
+        { id: 5, level: 'A1', question: "Do you ___ (like) tea? Yes, I do.", options: ["likes", "liking", "like", "liked"], answer: "like" },
+        { id: 6, level: 'A2', question: "They ___ (go) home two hours ago.", options: ["go", "goes", "went", "gone"], answer: "went" },
+        { id: 7, level: 'A2', question: "___ is your favorite food? My favorite food is pizza.", options: ["Who", "When", "What", "Where"], answer: "What" },
+        { id: 8, level: 'A2', question: "I don't have ___ time to help you right now.", options: ["many", "much", "a few", "several"], answer: "much" },
+        { id: 9, level: 'A2', question: "My phone is ___ (expensive) than yours.", options: ["expensiver", "more expensive", "most expensive", "expensive"], answer: "more expensive" },
+        { id: 10, level: 'A2', question: "Look! The baby ___ (sleep) peacefully.", options: ["sleep", "sleeps", "is sleeping", "slept"], answer: "is sleeping" },
+        { id: 11, level: 'A2', question: "I need to buy ___ (a/an) new charger.", options: ["a", "an", "the", "no article"], answer: "a" },
+
+        // B1
+        { id: 12, level: 'B1', question: "She ___ (not/see) her best friend since 2020.", options: ["didn't see", "hasn't seen", "isn't seeing", "haven't seen"], answer: "hasn't seen" },
+        { id: 13, level: 'B1', question: "If you ___ (study) hard, you will pass the test.", options: ["study", "studied", "will study", "studying"], answer: "study" },
+        { id: 14, level: 'B1', question: "This book was ___ (write) by a famous author.", options: ["wrote", "written", "writing", "write"], answer: "written" },
+        { id: 15, level: 'B1', question: "You ___ remember to lock the door when you leave.", options: ["might", "should", "would", "could"], answer: "should" },
+        { id: 16, level: 'B1', question: "He ___ (work) when the phone rang loudly.", options: ["works", "worked", "was working", "is working"], answer: "was working" },
+        { id: 17, level: 'B1', question: "I enjoy ___ (listen) to music while I jog.", options: ["to listen", "listen", "listening", "listened"], answer: "listening" },
+        { id: 18, level: 'B1', question: "The flight was delayed ___ the heavy snow.", options: ["although", "despite", "because of", "even though"], answer: "because of" },
+        { id: 19, level: 'B1', question: "If I ___ (be) you, I would take that job offer.", options: ["am", "was", "were", "had been"], answer: "were" },
+        { id: 20, level: 'B1', question: "She said that she ___ (come) to the party the next day.", options: ["will come", "would come", "comes", "is coming"], answer: "would come" },
+        
+        // B2
+        { id: 21, level: 'B2', question: "I look forward to ___ (meet) you next week.", options: ["meet", "meeting", "to meet", "met"], answer: "meeting" },
+        { id: 22, level: 'B2', question: "We need to **figure ___** a way to solve this problem quickly.", options: ["up", "out", "off", "on"], answer: "out" },
+        { id: 23, level: 'B2', question: "The contract must ___ (sign) before the end of the week.", options: ["sign", "be signed", "to be signed", "signed"], answer: "be signed" },
+
+        // C1
+        { id: 24, level: 'C1', question: "Rarely ___ (see) such a brilliant performance on this stage.", options: ["we saw", "did we see", "we did see", "we have seen"], answer: "did we see" },
+
+        // C2
+        { id: 25, level: 'C2', question: "The scientist’s research was characterized by her ___ dedication and refusal to give up. (Pilih kata sifat paling kuat)", options: ["consistent", "stubborn", "meticulous", "tenacious"], answer: "tenacious" }
+    ];
+
+    const form = document.getElementById('english-test-form');
+    const resultsDiv = document.getElementById('results');
+
+    // Fungsi untuk menampilkan soal
+    function renderQuestions() {
+        questions.forEach(q => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            const questionText = document.createElement('p');
+            questionText.className = 'question-text';
+            questionText.innerHTML = `(${q.level} - ${q.id}) ${q.question}`;
+            
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+
+            q.options.forEach((option, index) => {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `question-${q.id}`;
+                input.value = option;
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(option));
+                optionsDiv.appendChild(label);
+            });
+
+            card.appendChild(questionText);
+            card.appendChild(optionsDiv);
+            form.appendChild(card);
+        });
+    }
+
+    // Fungsi untuk menghitung skor dan menentukan level
+    function submitTest() {
+        let score = 0;
+        const totalQuestions = questions.length;
+        const userAnswers = {};
+
+        questions.forEach(q => {
+            const selectedOption = document.querySelector(`input[name="question-${q.id}"]:checked`);
+            userAnswers[q.id] = selectedOption ? selectedOption.value : null;
+
+            if (selectedOption && selectedOption.value === q.answer) {
+                score++;
+            }
+        });
+
+        // Tentukan Level CEFR berdasarkan Skor
+        let level = '';
+        let description = '';
+
+        if (score >= 23) {
+            level = 'C2 (Proficiency)';
+            description = 'Selamat! Anda menunjukkan penguasaan bahasa yang setara dengan penutur asli yang terdidik. Anda mampu menangani struktur tata bahasa yang sangat kompleks dan kosa kata formal.';
+        } else if (score >= 20) {
+            level = 'C1 (Advanced)';
+            description = 'Anda adalah pengguna mahir yang mampu memahami dan memproduksi teks yang kompleks dan detail. Anda hanya perlu sedikit latihan dalam nuansa idiomatik dan struktur formal.';
+        } else if (score >= 15) {
+            level = 'B2 (Upper Intermediate)';
+            description = 'Anda adalah pengguna independen yang kuat. Anda dapat berkomunikasi dengan lancar dan spontan dalam berbagai topik, termasuk abstrak. Fokus pada akurasi tata bahasa kompleks.';
+        } else if (score >= 10) {
+            level = 'B1 (Intermediate)';
+            description = 'Anda dapat memahami poin-poin utama dalam input standar dan berinteraksi dengan cukup lancar. Tingkatkan pemahaman tenses majemuk dan *connectors*.';
+        } else if (score >= 5) {
+            level = 'A2 (Elementary)';
+            description = 'Anda dapat memahami kalimat dan frasa yang sering digunakan dan bertukar informasi sederhana dalam rutinitas. Perkuat *Simple Past* dan *Present Continuous*.';
+        } else {
+            level = 'A1 (Beginner)';
+            description = 'Anda adalah pengguna dasar. Fokus pada pengenalan diri, objek sehari-hari, dan penggunaan *to be* serta *Simple Present Tense*.';
+        }
+
+        // Tampilkan Hasil
+        resultsDiv.style.display = 'block';
+        resultsDiv.innerHTML = `
+            <h2>Hasil Tes Anda</h2>
+            <p>Skor Total: **${score} / ${totalQuestions}**</p>
+            <h3>Tingkat Bahasa Inggris Anda: **${level}**</h3>
+            <p class="level-description">${description}</p>
+            <p>*(Catatan: Ini adalah tes indikatif. Level Anda mungkin berbeda dalam penilaian resmi.)*</p>
+        `;
+
+        // Nonaktifkan tombol dan formulir setelah submit
+        document.getElementById('submit-btn').disabled = true;
+        const allInputs = form.querySelectorAll('input[type="radio"]');
+        allInputs.forEach(input => input.disabled = true);
+    }
+
+    // Jalankan fungsi saat halaman dimuat
+    window.onload = renderQuestions;
+</script>
+
+</body>
+</html>
